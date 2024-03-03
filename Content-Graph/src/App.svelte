@@ -9,9 +9,6 @@
   let loaded = false;
 
   let options: echarts.EChartsOption = {
-    title: {
-      text: "Dependencies",
-    },
     series: [
       {
         type: "graph",
@@ -66,7 +63,7 @@
 
 <main>
   <div class="chart-root">
-    <h1>Chart of dependencies V: {packageData.version}</h1>
+    <h4>Chart of dependencies V: {packageData.version}</h4>
     <div id="full-d" class="full">
       <Chart {options} {events} renderer="svg" />
     </div>

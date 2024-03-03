@@ -1,19 +1,39 @@
 <script lang="ts" context="module">
-    import * as echarts from "echarts";
+    import * as echarts from "echarts/core";
+    import type { EChartsOption } from "echarts";
+    import { GraphChart } from "echarts/charts";
     import type { ChartEvent } from "./ChartEvent";
-    import { onMount, afterUpdate } from "svelte";
 
-    export type EChartsOptions = echarts.EChartsOption;
+    export type EChartsOptions = EChartsOption;
     export type EChartsTheme = string | object;
     export type EChartsRenderer = "canvas" | "svg";
-
+    import {
+        TitleComponent,
+        TooltipComponent,
+        GridComponent,
+        DatasetComponent,
+        TransformComponent,
+    } from "echarts/components";
     export type ChartOptions = {
         theme?: EChartsTheme;
         renderer?: EChartsRenderer;
         options: EChartsOptions;
         events: ChartEvent[];
     };
-
+    import { LabelLayout, UniversalTransition } from "echarts/features";
+    import { SVGRenderer } from "echarts/renderers";
+    // Register the required components
+    echarts.use([
+        GraphChart,
+        TitleComponent,
+        TooltipComponent,
+        GridComponent,
+        DatasetComponent,
+        TransformComponent,
+        LabelLayout,
+        UniversalTransition,
+        SVGRenderer,
+    ]);
     const DEFAULT_OPTIONS: Partial<ChartOptions> = {
         theme: undefined,
         renderer: "canvas",
@@ -59,25 +79,17 @@
 </script>
 
 <script lang="ts">
-    export let options: echarts.EChartsOption;
+    export let options: EChartsOption;
     export let events: ChartEvent[];
     export let { theme, renderer } = DEFAULT_OPTIONS;
-    // let echartsInstance: any;
-    // afterUpdate(() => {
-    //     console.log({ update: options, echartsInstance });
-    //     echartsInstance?.setOption(options);
-    // });
-    // onMount(() => {
-    //     const element = document.getElementById("chart-render");
-    //     echartsInstance = echarts.init(element, theme, { renderer });
-    //     echartsInstance.setOption(options);
-    //     console.log({ mount: options });
-    // });
 </script>
 
 <div class="chart" id="parent-chart">
-    <!-- <div id="chart-render" /> -->
-    <div id="chart-render" class="chart" use:chartable={{ renderer, theme, options, events }} />
+    <div
+        id="chart-render"
+        class="chart"
+        use:chartable={{ renderer, theme, options, events }}
+    />
 </div>
 
 <style>
@@ -87,14 +99,6 @@
     }
     .chart > * {
         height: var(--view-height);
-        width: 100%;
-    }
-    #chart-render > div {
-        height: var(--view-height) !important;
-        width: 100%;
-    }
-    #chart-render > div> svg {
-        height: var(--view-height) !important;
         width: 100%;
     }
 </style>
