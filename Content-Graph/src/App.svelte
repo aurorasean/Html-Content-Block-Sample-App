@@ -8,6 +8,41 @@
   let edges: any[] = [];
   let loaded = false;
 
+  let selectedHightlight = { id: "-1" };
+
+  const highlightEdges = () => {
+    edges.forEach((x) => {
+      x.lineStyle = {
+        ...x.lineStyle,
+        color:
+          x.source === selectedHightlight.id ||
+          x.target === selectedHightlight.id
+            ? "red"
+            : "grey",
+      };
+      x.label = {
+        ...x.label,
+        color: "grey",
+        textBorderColor: "black",
+        textBorderWidth: 1,
+        textBorderRadius: 4,
+        show:
+          x.source === selectedHightlight.id ||
+          x.target === selectedHightlight.id,
+      };
+    });
+    options = {
+      ...options,
+      series: [
+        {
+          // @ts-ignore
+          ...options.series[0],
+          data: nodes,
+          links: edges,
+        },
+      ],
+    };
+  };
   let options: echarts.EChartsOption = {
     series: [
       {
@@ -22,7 +57,7 @@
           friction: 0.1,
           initLayout: "circular",
           layoutAnimation: true,
-          edgeLength: 100,
+          edgeLength: 150,
         },
         draggable: true,
         edgeSymbol: ["circle", "arrow"],
@@ -37,7 +72,8 @@
       filter: {},
       event: (params: any) => {
         const { data } = params;
-        console.log({ data });
+        selectedHightlight = data;
+        highlightEdges();
       },
     },
   ];

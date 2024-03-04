@@ -39,6 +39,7 @@ interface Edge {
     source: string;
     target: string;
     label?: Label;
+    lineStyle?: any;
 }
 const createEdgesAndNodes = (table: any[]) => {
     const edges: Edge[] = [];
@@ -73,6 +74,12 @@ const createEdgesAndNodes = (table: any[]) => {
                     label: {
                         show: false,
                         formatter: `${name}`
+                    },
+                    lineStyle: {
+                        width: 2,
+                        color: 'grey',
+                        shadowColor: 'rgba(0, 0, 0, 0.5)',
+                        shadowBlur: 10
                     }
 
                 })
@@ -94,10 +101,9 @@ export async function LoadData() {
             // debug value
             body = "<div class=\"table-wrap\"><table class=\"aui metadata-summary-macro null\" data-cql=\"null\" data-details-id=\"Render\" data-first-column-heading=\"Title\" data-count-comments=\"false\" data-count-likes=\"false\"data-total-pages=\"1\" data-page-size=\"30\" data-sort-by=\"null\" data-reverse-sort=\"false\" data-blueprint-present=\"false\" data-current-space-key=\"~557058a1ada4e4df744318a9e5882113dc327d\" data-current-content-id=\"7831683\"><thead><tr><th>Title</th><th><p xmlns=\"http://www.w3.org/1999/xhtml\" /></th><th><p xmlns=\"http://www.w3.org/1999/xhtml\"><strong>Name</strong></p></th><th><p xmlns=\"http://www.w3.org/1999/xhtml\"><strong>relationship:is Hosted by</strong></p></th><th><p xmlns=\"http://www.w3.org/1999/xhtml\"><strong>relationship:is dependent on</strong></p></th></tr></thead><tbody><tr><td class=\"title\" data-content-id=\"7635094\"><a href=\"/wiki/spaces/~557058a1ada4e4df744318a9e5882113dc327d/pages/7635094/Child+Page+1\">Child Page 1</a></td><td><p xmlns=\"http://www.w3.org/1999/xhtml\" /></td><td><p xmlns=\"http://www.w3.org/1999/xhtml\">Child Page 1</p></td><td>&nbsp;</td><td><p xmlns=\"http://www.w3.org/1999/xhtml\">Parent Page</p></td></tr><tr><td class=\"title\" data-content-id=\"7929859\"><a href=\"/wiki/spaces/~557058a1ada4e4df744318a9e5882113dc327d/pages/7929859/Child+Page+2\">Child Page 2</a></td><td><p xmlns=\"http://www.w3.org/1999/xhtml\" /></td><td><p xmlns=\"http://www.w3.org/1999/xhtml\">Child Page 2</p></td><td>&nbsp;</td><td><p xmlns=\"http://www.w3.org/1999/xhtml\">Parent Page</p></td></tr><tr><td class=\"title\" data-content-id=\"7667834\"><a href=\"/wiki/spaces/~557058a1ada4e4df744318a9e5882113dc327d/pages/7667834/Parent+Page\">Parent Page</a></td><td><p xmlns=\"http://www.w3.org/1999/xhtml\" /></td><td><p xmlns=\"http://www.w3.org/1999/xhtml\">Parent Page</p></td><td><p xmlns=\"http://www.w3.org/1999/xhtml\">Root</p></td><td>&nbsp;</td></tr></tbody></table></div><p />"
         }
-        
+
         const table = parseTable(body);
         const { nodes, edges } = createEdgesAndNodes(table);
-        // console.log({ table, nodes, edges });
         return { nodes, edges }
         // Handle the retrieved data here
     } catch (error) {

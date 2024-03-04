@@ -52,7 +52,6 @@
         echartsInstance.setOption(options);
 
         function handleResize() {
-            console.log("resize");
             setTimeout(() => {
                 echartsInstance.resize();
             }, 1000);

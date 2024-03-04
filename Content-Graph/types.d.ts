@@ -9,9 +9,7 @@ interface ConfluenceExportView {
 }
 declare global {
     interface Window {
-
-        // takes an input of a confluence Content Id, and returns the export_view content
-        //  
+        // takes an input of a confluence Content Id, and returns the export_view content 
         fetchConfluence: (id: string) => Promise<ConfluenceExportView>;
     }
 }
