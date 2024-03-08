@@ -95,7 +95,10 @@ export async function LoadData() {
     try {
         let body = "";
         if (window.fetchConfluence) {
-            const data = await window.fetchConfluence('7831683')
+            // @ts-ignore
+            console.log({ contentId: window.contentId })
+            // @ts-ignore
+            const data = await window.fetchConfluence(window.contentId ?? '1409027')
             body = data.body.export_view.value;
         } else {
             // debug value
